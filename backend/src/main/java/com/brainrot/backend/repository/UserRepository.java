@@ -1,9 +1,9 @@
 package com.brainrot.backend.repository;
 
-import com.brainrot.backend.model.Fact;
+import com.brainrot.backend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FactRepository extends JpaRepository<Fact,Long> {
+public interface UserRepository extends JpaRepository<User, String> {
 }

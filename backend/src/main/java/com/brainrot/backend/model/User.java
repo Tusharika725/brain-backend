@@ -1,26 +1,52 @@
 package com.brainrot.backend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "app_user")
 public class User {
-    private String name;
-    private int age;
+    @Id
+    private String username;
+    private int wordSearchScore;
+    private int captionScore;
 
-    public User(){
+    public User() {
 
     }
-    public User(String name,int age){
-        this.name = name;
-        this.age = age;
+
+    public User(String username) {
+        this.username = username;
+        this.wordSearchScore = 0;
+        this.captionScore = 0;
     }
-    public String getName(){
-        return name;
+
+    public String getUsername() {
+        return username;
     }
-    public int getAge(){
-        return age;
+
+    public void setUsername(String username) {
+        this.username = username;
     }
-    public void setName(String name){
-        this.name = name;
+
+    public int getWordSearchScore() {
+        return wordSearchScore;
     }
-    public void setAge(int age){
-        this.age = age;
+
+    public void setWordSearchScore(int wordSearchScore) {
+        this.wordSearchScore = wordSearchScore;
+    }
+
+    public int getCaptionScore() {
+        return captionScore;
+    }
+
+    public void setCaptionScore(int captionScore) {
+        this.captionScore = captionScore;
+    }
+
+    public int getBrainRotScore() {
+        return this.wordSearchScore + this.captionScore;
     }
 }
