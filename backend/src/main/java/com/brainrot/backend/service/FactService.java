@@ -1,6 +1,6 @@
 package com.brainrot.backend.service;
 
-import com.brainrot.backend.model.FactDto;
+import com.brainrot.backend.dto.FactDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

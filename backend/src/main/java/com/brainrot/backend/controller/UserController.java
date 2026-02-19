@@ -15,13 +15,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/{username}/wordsearch")
-    public User submitWordSearch(
-            @PathVariable String username,
-            @RequestParam int wordsFound,
-            @RequestParam int gameAttempts) {
-        return userService.processWordSearch(username, wordsFound, gameAttempts);
-    }
 }
 
 

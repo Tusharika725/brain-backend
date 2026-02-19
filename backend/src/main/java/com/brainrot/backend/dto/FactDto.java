@@ -1,4 +1,4 @@
-package com.brainrot.backend.model;
+package com.brainrot.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

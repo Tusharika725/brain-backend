@@ -1,6 +1,6 @@
 package com.brainrot.backend.controller;
 
-import com.brainrot.backend.model.FactDto;
+import com.brainrot.backend.dto.FactDto;
 import com.brainrot.backend.service.FactService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
