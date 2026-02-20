@@ -32,7 +32,7 @@ public class WordSearchService {
             throw new IllegalArgumentException("Invalid attempts! You get a maximum of 3 tries.");
         }
         //
-        Optional<User> existingUser = userRepository.findbyUsername(username);
+        Optional<User> existingUser = userRepository.findByUsername(username);
         User user = existingUser.orElseGet(() -> new User(username));
         int earnedPoints = wordsFound;
         if (gameAttempts > 1) {
