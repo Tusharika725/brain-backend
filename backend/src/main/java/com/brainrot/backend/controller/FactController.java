@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin
+@CrossOrigin(origins = "https://upscroll-tau.vercel.app/")
 @RestController
 @RequestMapping("/api/facts")
 public class FactController {
