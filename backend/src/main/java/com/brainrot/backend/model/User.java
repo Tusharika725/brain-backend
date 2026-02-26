@@ -1,9 +1,7 @@
 package com.brainrot.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity
 @Table(name = "app_user")
@@ -11,21 +9,38 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true,nullable = false)
+    @Column(nullable = false, unique = true)
+    private String email;
+    @Column(nullable = true)
     private String username;
+    @JsonIgnore
+    @Column(nullable = false)
+    private String passwordHash;
+    @Column(nullable = false)
+    private int totalAuraPoints = 0;
 
-    @ElementCollection
-    private Map<String, GameResult> completedGames = new HashMap<>();
-
+    // @ElementCollection
+    // private Map<String, GameResult> completedGames = new HashMap<>();
     public User() {
     }
 
-    public User(String username) {
+    public User(String email, String username, String passwordHash) {
         this.username = username;
+        this.passwordHash = passwordHash;
+        this.totalAuraPoints = 0;
+        this.email = email;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -36,23 +51,21 @@ public class User {
         this.username = username;
     }
 
-    public void saveGameScore(String gameName, int earnedPoints, int maxPoints) {
-        completedGames.put(gameName, new GameResult(earnedPoints, maxPoints));
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public int getBrainRotScore() {
-        if (completedGames.isEmpty()) {
-            return 0;
-        }
-        int totalEarned = 0;
-        int totalMax = 0;
-
-        for (GameResult result : completedGames.values()) {
-            totalEarned += result.getPointsEarned();
-            totalMax += result.getMaxPoints();
-        }
-        double percentage = ((double) totalEarned / totalMax) * 100;
-        return (int) Math.round(percentage);
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
+
+    public int getAuraPoints() {
+        return this.totalAuraPoints;
+    }
+
+    public void addAuraPoints(int pointsToAdd) {
+        this.totalAuraPoints += pointsToAdd;
+    }
+
 
 }

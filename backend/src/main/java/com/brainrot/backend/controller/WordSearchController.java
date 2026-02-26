@@ -1,8 +1,10 @@
 package com.brainrot.backend.controller;
 
-import com.brainrot.backend.model.User;
-import com.brainrot.backend.service.UserService;
+import com.brainrot.backend.dto.WordSearchResponseDto;
 import com.brainrot.backend.service.WordSearchService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,19 +14,28 @@ import java.util.List;
 @RequestMapping("/api/games")
 public class WordSearchController {
 
+    private static final Logger logger = LoggerFactory.getLogger(WordSearchController.class);
     private final WordSearchService wordSearchService;
-    public WordSearchController(WordSearchService wordSearchService){
+
+    public WordSearchController(WordSearchService wordSearchService) {
         this.wordSearchService = wordSearchService;
     }
+
     @GetMapping("/wordsearch/generate")
-    public List<String> getWordSearchData(){
-        return wordSearchService.generateWordSearch();
+    public ResponseEntity<List<String>> getWordSearchData() {
+        logger.info("Frontend requested new word search puzzle");
+        List<String> words = wordSearchService.generateWordSearch();
+        return ResponseEntity.ok(words);
     }
-    @PostMapping("/{username}/wordsearch")
-    public User submitWordSearch(
-            @PathVariable String username,
+
+    @PostMapping("/wordsearch/submit")
+    public ResponseEntity<WordSearchResponseDto> submitWordSearch(
+            @RequestParam String email,
             @RequestParam int wordsFound,
             @RequestParam int gameAttempts) {
-        return wordSearchService.processWordSearch(username, wordsFound, gameAttempts);
+        logger.info("Incoming Word Search submission for user: [{}]", email);
+        WordSearchResponseDto gameStats = wordSearchService.processWordSearch(email, wordsFound, gameAttempts);
+        logger.info("Sending updated stats back to frontend for user: [{}]", email);
+        return ResponseEntity.ok(gameStats);
     }
 }

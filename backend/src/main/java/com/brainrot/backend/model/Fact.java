@@ -12,24 +12,26 @@ public class Fact {
     private Long id;
     private String text;
 
-    // Constructor 1: The empty one required by JPA/Database
     public Fact() {
     }
 
-    // Constructor 2: The one that ONLY takes text
     public Fact(String text) {
         this.text = text;
     }
-    public Long getId(){
+
+    public Long getId() {
         return id;
     }
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getText(){
+
+    public String getText() {
         return text;
     }
-    public void setText(String text){
+
+    public void setText(String text) {
         this.text = text;
     }
 

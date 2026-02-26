@@ -1,35 +1,41 @@
 package com.brainrot.backend.controller;
 
 import com.brainrot.backend.dto.CaptionImageDto;
+import com.brainrot.backend.dto.CaptionResponseDto;
+import com.brainrot.backend.service.ImageService;
+import com.brainrot.backend.service.LlmScoringService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/captions")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class CaptionController {
-    @GetMapping("/image")
-    public ResponseEntity<CaptionImageDto> getImageByCategory(@RequestParam String category){
-        String imageUrl = "";
-        String imageId = "";
-        switch (category.toLowerCase()) {
-            case "meme culture":
-                imageId = "meme_01";
-                imageUrl = "https://i.imgflip.com/1g8my4.jpg"; // Disaster Girl meme
-                break;
-            case "political humour":
-                imageId = "pol_01";
-                imageUrl = "https://i.imgflip.com/4t0m5.jpg"; // Bernie Sanders Mittens
-                break;
-            case "nature & wild":
-                imageId = "nature_01";
-                imageUrl = "https://i.imgflip.com/22bdq6.jpg"; // Is this a pigeon?
-                break;
-            default:
-                imageId = "default_01";
-                imageUrl = "https://i.imgflip.com/30b1gx.jpg"; // Cat meme fallback
-        }
 
-        return ResponseEntity.ok(new CaptionImageDto(imageId, imageUrl));
+    private final ImageService imageService;
+    private final LlmScoringService llmScoringService;
+
+    public CaptionController(ImageService imageService, LlmScoringService llmScoringService) {
+        this.imageService = imageService;
+        this.llmScoringService = llmScoringService;
     }
+
+    @GetMapping("/image")
+    public ResponseEntity<CaptionImageDto> getImageByCategory(@RequestParam String category) {
+
+        CaptionImageDto image = imageService.getRandomImageByCategory(category);
+        return ResponseEntity.ok(image);
+
+    }
+
+    @PostMapping("/evaluate")
+    public ResponseEntity<CaptionResponseDto> evaluateCaption(@RequestParam String email, @RequestParam String category, @RequestParam String caption, @RequestParam String imageUrl) {
+        System.out.println("judging caption for image " + imageUrl);
+        CaptionResponseDto aiGrade = llmScoringService.gradeCaption(email, category, imageUrl, caption);
+        return ResponseEntity.ok(aiGrade);
+
+
+    }
+
+
 }
