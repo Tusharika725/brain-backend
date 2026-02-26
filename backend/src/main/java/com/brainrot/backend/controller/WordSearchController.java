@@ -30,7 +30,7 @@ public class WordSearchController {
 
     @PostMapping("/wordsearch/submit")
     public ResponseEntity<WordSearchResponseDto> submitWordSearch(
-            @RequestParam String email,
+            @RequestParam(value = "email", required = false) String email,
             @RequestParam int wordsFound,
             @RequestParam int gameAttempts) {
         logger.info("Incoming Word Search submission for user: [{}]", email);

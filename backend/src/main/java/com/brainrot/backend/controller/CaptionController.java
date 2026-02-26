@@ -29,7 +29,7 @@ public class CaptionController {
     }
 
     @PostMapping("/evaluate")
-    public ResponseEntity<CaptionResponseDto> evaluateCaption(@RequestParam String email, @RequestParam String category, @RequestParam String caption, @RequestParam String imageUrl) {
+    public ResponseEntity<CaptionResponseDto> evaluateCaption(@RequestParam (value = "email", required = false)String email, @RequestParam String category, @RequestParam String caption, @RequestParam String imageUrl) {
         System.out.println("judging caption for image " + imageUrl);
         CaptionResponseDto aiGrade = llmScoringService.gradeCaption(email, category, imageUrl, caption);
         return ResponseEntity.ok(aiGrade);
