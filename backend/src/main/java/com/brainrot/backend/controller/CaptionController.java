@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/captions")
-@CrossOrigin(origins = "https://upscroll-tau.vercel.app/")
+@CrossOrigin(origins = "https://upscroll-tau.vercel.app")
 public class CaptionController {
 
     private final ImageService imageService;
